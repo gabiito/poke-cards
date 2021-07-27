@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: #716F81;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    place-content: center;
+    font-family: 'Raleway', sans-serif;
+}
+
+.card{
+    width: 200px;
+    background: #dedede;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.card--img{
+    height: 100px;
+    background: #000;
+}
+.card__body{
+    width: 100%;
+    display: block;
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.card__body h4{
+    border-bottom: 2px solid #716F81;
+}
+
+.card__body__stat{
+    margin-top: 5px;
+    border-radius: 0 4px 4px 0;
+    overflow: hidden;
+}
+
+.stat--hp{
+    background: red;
+    width: 85%;
+}
+.stat--attack{
+    background: orange;
+    width: 45%;
+}
+.stat--defense{
+    background: darkblue;
+    width: 65%;
+}
+.stat--speed{
+    background: cyan;
+    width: 35%;
+}
+
+.card__body__stat i{
+    padding: 5px;
+    color: #333;
+    background: #fff;
+}
