@@ -3,81 +3,14 @@
 *{
     margin: 0;
     box-sizing: border-box;
-}
-
-body{
-    background: #716F81;
-    height: 100vh;
-    width: 100vw;
-    display: grid;
-    place-content: center;
-    font-family: 'Raleway', sans-serif;
-}
-
-.card{
-    width: 200px;
-    background: #dedede;
-    border-radius: 12px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-.card--img{
-    height: 100px;
-    background: #000;
-}
-.card__body{
-    width: 100%;
-    display: block;
-    background: #fff;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.card__body h4{
-    border-bottom: 2px solid #716F81;
-}
-
-.card__body__stat{
-    margin-top: 5px;
-    border-radius: 0 4px 4px 0;
-    overflow: hidden;
-}
-
-.stat--hp{
-    background: red;
-    width: 85%;
-}
-.stat--attack{
-    background: orange;
-    width: 45%;
-}
-.stat--defense{
-    background: darkblue;
-    width: 65%;
-}
-.stat--speed{
-    background: cyan;
-    width: 35%;
-}
-
-.card__body__stat i{
-    padding: 5px;
-    color: #333;
-    background: #fff;
-}@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
-
-*{
-    margin: 0;
-    box-sizing: border-box;
     font-family: 'Raleway', sans-serif;
 }
 
 body{
     height: 100vh;
-    background: #716F81;
+    /*background: #716F81;*/
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(90,92,106,1) 0%, rgba(32,45,58,1) 81.3% );
+    background-attachment: fixed;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -105,12 +38,13 @@ body{
 .container{
     padding: 2em 0;
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-evenly;
-    gap: 2em;
+    gap: 3em;
 }
 
 .card{
@@ -123,6 +57,11 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    transition: all ease-in-out 300ms;
+}
+.card:hover{
+    transform: scale(1.2);
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.9);
 }
 .card__header{
     position: relative;
@@ -137,6 +76,20 @@ body{
     width: 100%;
     height: 50%;
     background: teal;
+}
+.card__header--num{
+    position: absolute;
+    right: -50px;
+    top: -50px;
+    line-height: 130px;
+    text-align: left;
+    padding-left: 1em;
+    font-weight: bold;
+    color: teal;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+    border-radius: 50%;
 }
 .card__header--img{
     width: 100px;
@@ -234,6 +187,56 @@ body{
     background: #fff;
     float: left;
 }
+
+.lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
+    top:50%;
+    left: 50%;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 51px;
+    height: 51px;
+    margin: 6px;
+    border: 6px solid #fff;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #fff transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  #spinner-wrapper{
+    position: fixed;
+    background-color: rgba(0,0,0,0.5);
+    width:100%;
+    height: 100%;
+    top:0;
+    left:0;
+    z-index: 1021;
+    display: none;
+  }
+
 /* 
 .card__body__stat i::after{
     content: '10';
