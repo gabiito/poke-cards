@@ -1,6 +1,6 @@
 const colors = ["#B97A95", "#F6AE99", "#B5CDA3", "#F38BA0", "#C1AC95", "#5F939A", "#94D0CC", "#F1CA89", "#CC9B6D", "#FAF0AF", "#F69E7B"];
 
-let pokemonAPI = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=14";
+let pokemonAPI = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=10";
 
 const container = document.getElementById("app");
 
@@ -13,7 +13,21 @@ async function getPokemonData (url){
     return data;
 }
 
+function getStats(pokemon){
+    let max = Math.max(pokemon.stats[0].base_stat, pokemon.stats[1].base_stat, pokemon.stats[2].base_stat, pokemon.stats[5].base_stat);
+    if (max > 100){
+        let statWidths = [];
+        pokemon.stats.forEach(stat =>{
+            statWidths.push(Math.floor((stat.base_stat * 100) / max));
+        });
+        return statWidths;
+    }
+    return false;
+}
+
 function fillContent(pokemon){
+        let statWidths = getStats(pokemon);
+        console.log(statWidths)
         container.innerHTML += `
             <div class="card">
                 <div class="card__header">
@@ -26,21 +40,21 @@ function fillContent(pokemon){
                 
                 <div class="card__body">
                     <h4>Stats</h4>
-                    <div class="card__body__stat stat--hp" style="width:${pokemon.stats[0].base_stat >= 100 ?  100 : pokemon.stats[0].base_stat}%;">
+                    <div class="card__body__stat stat--hp" style="width:${statWidths ?  statWidths[0] : pokemon.stats[0].base_stat}%;">
                         <i class="fas fa-heart"></i>
                         ${pokemon.stats[0].base_stat}
                     </div>
-                    <div class="card__body__stat stat--attack" style="width:${pokemon.stats[1].base_stat >= 100 ?  100 : pokemon.stats[1].base_stat}%;">
+                    <div class="card__body__stat stat--attack" style="width:${statWidths ?  statWidths[1] : pokemon.stats[1].base_stat}%;">
                         <i class="fas fa-crosshairs"></i>
                         ${pokemon.stats[1].base_stat}
                     </div>
-                    <div class="card__body__stat stat--defense" style="width:${pokemon.stats[2].base_stat >= 100 ?  100 : pokemon.stats[2].base_stat}%;">
+                    <div class="card__body__stat stat--defense" style="width:${statWidths ?  statWidths[2] : pokemon.stats[2].base_stat}%;">
                         <i class="fas fa-shield-alt"></i>
                         ${pokemon.stats[2].base_stat}
                     </div>
-                    <div class="card__body__stat stat--speed" style="width:${pokemon.stats[3].base_stat >= 100 ?  100 : pokemon.stats[3].base_stat}%;">
+                    <div class="card__body__stat stat--speed" style="width:${statWidths ?  statWidths[5]  : pokemon.stats[5].base_stat}%;">
                         <i class="fas fa-wind"></i>
-                        ${pokemon.stats[3].base_stat}
+                        ${pokemon.stats[5].base_stat}
                     </div>
                 </div>
 
@@ -79,6 +93,27 @@ let loader = function (url){
         console.log(e);
     }
 }
+
+function movePage(object, direction){
+    if(object){
+        switch(direction){
+            case 'next':    if(object.next != null){
+                                container.innerHTML = "";
+                                showSpinner();
+                                loader(pokemonAPI.next);
+                            }
+                break;
+            case 'prev':    if(object.previous != null){
+                                container.innerHTML = "";
+                                showSpinner();
+                                loader(pokemonAPI.previous);
+                            } 
+            break;
+            default: (console.log("Direction error"));
+        }
+    }
+}
+
 document.addEventListener("DOMContentLoaded", (evt) =>{
     
     showSpinner();
@@ -90,19 +125,11 @@ document.getElementById("next").addEventListener("click", (evt) =>{
     evt.preventDefault();
     container.innerHTML = "";
     
-    if(pokemonAPI && pokemonAPI.next != null){
-        container.innerHTML = "";
-        showSpinner();
-        loader(pokemonAPI.next);
-    }
+    movePage(pokemonAPI,'next');
 });
 
 document.getElementById("prev").addEventListener("click", (evt) =>{
     evt.preventDefault();
     
-    if(pokemonAPI && pokemonAPI.previous != null){
-        container.innerHTML = "";
-        showSpinner();
-        loader(pokemonAPI.previous);
-    }
+    movePage(pokemonAPI, 'prev');
 });
