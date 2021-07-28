@@ -4,26 +4,13 @@ let pokemonAPI = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=14";
 
 const container = document.getElementById("app");
 
-async function getPokemonList (url){
-    try{
-        const resp = await fetch(url);
-        const data = await resp.json();
-        return data;
-    }
-    catch(e){
-        return e;
-    }
-}
-
 async function getPokemonData (url){
-    try{
-        const resp = await fetch(url);
-        const data = await resp.json();
-        return data;
+    let resp = await fetch(url);
+    if (!resp.ok){
+        throw new Error(`HTTP error!, status: ${resp.status}`);
     }
-    catch (e){
-        return e;
-    }
+    let data = await resp.json();
+    return data;
 }
 
 function fillContent(pokemon){
@@ -59,8 +46,11 @@ function fillContent(pokemon){
 
             </div>
         `;
-        
-    const tops = document.querySelectorAll(".card__header--top");
+        colorShifter(".card__header--top");
+}
+
+function colorShifter(topClass){
+    const tops = document.querySelectorAll(topClass);
     for (let top of tops){
         let rand = Math.floor(Math.random() * colors.length);
         top.style.background = colors[rand];
@@ -77,7 +67,7 @@ var showSpinner = function(){
 
 let loader = function (url){
     try {
-        getPokemonList(url).then(res =>{
+        getPokemonData(url).then(res =>{
             pokemonAPI = res;
 
             res.results.forEach(pokemon =>{
@@ -92,7 +82,7 @@ let loader = function (url){
 document.addEventListener("DOMContentLoaded", (evt) =>{
     
     showSpinner();
-    loader(pokemonAPI)
+    loader(pokemonAPI);
 });
 
 
