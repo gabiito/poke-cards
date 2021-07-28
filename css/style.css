@@ -1,15 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&display=swap');
 
-*{
+* {
     margin: 0;
     box-sizing: border-box;
     font-family: 'Raleway', sans-serif;
 }
 
-body{
+body {
     height: 100vh;
     /*background: #716F81;*/
-    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(90,92,106,1) 0%, rgba(32,45,58,1) 81.3% );
+    background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(90, 92, 106, 1) 0%, rgba(32, 45, 58, 1) 81.3%);
     background-attachment: fixed;
     display: flex;
     flex-direction: row;
@@ -17,7 +17,7 @@ body{
     justify-content: space-evenly;
 }
 
-.aside button{
+.aside button {
     margin: 10px;
     color: #333;
     font-size: 2em;
@@ -29,13 +29,13 @@ body{
     transition: all ease-in-out 300ms;
 }
 
-.aside button:hover{
+.aside button:hover {
     background: rgba(255, 255, 255, 0.8);
     transform: translateY(-3px);
     box-shadow: 0 6px 10px rgba(50, 50, 50, 0.8);
 }
 
-.container{
+.container {
     padding: 2em 0;
     width: 100%;
     height: 100%;
@@ -47,7 +47,7 @@ body{
     gap: 3em;
 }
 
-.card{
+.card {
     width: 200px;
     background: #fff;
     border-radius: 12px;
@@ -59,11 +59,13 @@ body{
     justify-content: space-evenly;
     transition: all ease-in-out 300ms;
 }
-.card:hover{
+
+.card:hover {
     transform: scale(1.2);
     box-shadow: 0 0px 20px rgba(0, 0, 0, 0.9);
 }
-.card__header{
+
+.card__header {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -71,13 +73,15 @@ body{
     width: 100%;
     height: 150px;
 }
-.card__header--top{
+
+.card__header--top {
     position: absolute;
     width: 100%;
     height: 50%;
     background: teal;
 }
-.card__header--num{
+
+.card__header--num {
     position: absolute;
     right: -50px;
     top: -50px;
@@ -91,7 +95,8 @@ body{
     background: #fff;
     border-radius: 50%;
 }
-.card__header--img{
+
+.card__header--img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -99,40 +104,44 @@ body{
     margin-top: 25px;
     z-index: 999;
 }
-.card__header h2{
+
+.card__header h2 {
     color: teal;
     text-transform: capitalize;
 }
-.card__header small{
+
+.card__header small {
     position: absolute;
-    bottom: -1.2em;
+    bottom: -1.3em;
     right: 10px;
 }
 
-.card__body{
+.card__body {
     width: 100%;
     display: block;
     padding: 10px;
 }
 
-.card__body h4{
+.card__body h4 {
     border-bottom: 1px solid #abaaaf;
 }
 
-.card__body__stat{
+.card__body__stat {
     color: #fff;
-    margin-top: 5px;
+    margin-top: 6px;
     height: 22px;
     border-radius: 0 4px 4px 0;
-    /* overflow: hidden; */
+    box-shadow: 0px 0px 0px 2px #fff;
     cursor: pointer;
     text-align: center;
     position: relative;
 }
 
-.card__body__stat::after{
+.card__body__stat::after {
     content: '';
     position: absolute;
+    top: -8px;
+    right: -8px;
     padding: 3px;
     font-size: 0.7em;
     border-radius: 4px;
@@ -141,48 +150,49 @@ body{
     opacity: 0;
     transition: all ease-in-out 300ms;
 }
-.card__body__stat:hover::after{
+
+.card__body__stat:hover::after {
     opacity: 1;
 }
-.stat--hp{
+
+.stat--hp {
     background: #F8485E;
     width: 100%;
 }
-.stat--hp::after{
-    top:-8px;
-    right: -8px;
+
+.stat--hp::after {
     content: 'HP';
 }
-.stat--attack{
+
+.stat--attack {
     background: #FFC947;
     width: 45%;
 }
-.stat--attack::after{
-    top:-8px;
-    right: -8px;
+
+.stat--attack::after {
     content: 'ATK';
 }
-.stat--defense{
+
+.stat--defense {
     background: #003638;
     width: 65%;
 }
-.stat--defense::after{
-    top:-8px;
-    right: -8px;
+
+.stat--defense::after {
     content: 'DEF';
 }
-.stat--speed{
+
+.stat--speed {
     background: #53B8BB;
     width: 35%;
 }
-.stat--speed::after{
-    top:-8px;
-    right: -8px;
+
+.stat--speed::after {
     content: 'SPD';
 }
 
-.card__body__stat i{
-    padding: 4px;
+.card__body__stat i {
+    padding: 5px;
     color: #333;
     background: #fff;
     float: left;
@@ -193,10 +203,11 @@ body{
     position: relative;
     width: 64px;
     height: 64px;
-    top:50%;
+    top: 50%;
     left: 50%;
-  }
-  .lds-ring div {
+}
+
+.lds-ring div {
     box-sizing: border-box;
     display: block;
     position: absolute;
@@ -207,51 +218,37 @@ body{
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: #fff transparent transparent transparent;
-  }
-  .lds-ring div:nth-child(1) {
-    animation-delay: -0.45s;
-  }
-  .lds-ring div:nth-child(2) {
-    animation-delay: -0.3s;
-  }
-  .lds-ring div:nth-child(3) {
-    animation-delay: -0.15s;
-  }
-  @keyframes lds-ring {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  #spinner-wrapper{
-    position: fixed;
-    background-color: rgba(0,0,0,0.5);
-    width:100%;
-    height: 100%;
-    top:0;
-    left:0;
-    z-index: 1021;
-    display: none;
-  }
-
-/* 
-.card__body__stat i::after{
-    content: '10';
-    font-family: inherit;
-    font-size: 1em;
-    position: absolute;
-    width: 85%;
-    text-align: center;
-    color: #fff;
-    visibility: hidden;
-    transition: all ease-in-out 300ms;
-    transform: scale(0);
 }
 
-.card__body__stat:hover i::after{
-    visibility: visible;
-    transform: scale(1);
-} */
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#spinner-wrapper {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1021;
+    display: none;
+}
