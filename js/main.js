@@ -4,8 +4,6 @@ let pokemonAPI = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=14";
 
 const container = document.getElementById("app");
 
-
-
 async function getPokemonList (url){
     try{
         const resp = await fetch(url);
@@ -21,7 +19,7 @@ async function getPokemonData (url){
     try{
         const resp = await fetch(url);
         const data = await resp.json();
-        return data
+        return data;
     }
     catch (e){
         return e;
@@ -30,35 +28,36 @@ async function getPokemonData (url){
 
 function fillContent(pokemon){
         container.innerHTML += `
-        <div class="card">
-            <div class="card__header">
-                <div class="card__header--top"></div>
-                <div class="card__header--num">${pokemon.id}</div>
-                <img src="${pokemon.sprites.front_default}" class="card__header--img">
-                <h2>${pokemon.name}</h2>
-                <small>WEIGHT: ${pokemon.weight}Kg</small>
+            <div class="card">
+                <div class="card__header">
+                    <div class="card__header--top"></div>
+                    <div class="card__header--num">${pokemon.id}</div>
+                    <img src="${pokemon.sprites.front_default}" class="card__header--img">
+                    <h2>${pokemon.name}</h2>
+                    <small>WEIGHT: ${pokemon.weight}Kg</small>
+                </div>
+                
+                <div class="card__body">
+                    <h4>Stats</h4>
+                    <div class="card__body__stat stat--hp" style="width:${pokemon.stats[0].base_stat >= 100 ?  100 : pokemon.stats[0].base_stat}%;">
+                        <i class="fas fa-heart"></i>
+                        ${pokemon.stats[0].base_stat}
+                    </div>
+                    <div class="card__body__stat stat--attack" style="width:${pokemon.stats[1].base_stat >= 100 ?  100 : pokemon.stats[1].base_stat}%;">
+                        <i class="fas fa-crosshairs"></i>
+                        ${pokemon.stats[1].base_stat}
+                    </div>
+                    <div class="card__body__stat stat--defense" style="width:${pokemon.stats[2].base_stat >= 100 ?  100 : pokemon.stats[2].base_stat}%;">
+                        <i class="fas fa-shield-alt"></i>
+                        ${pokemon.stats[2].base_stat}
+                    </div>
+                    <div class="card__body__stat stat--speed" style="width:${pokemon.stats[3].base_stat >= 100 ?  100 : pokemon.stats[3].base_stat}%;">
+                        <i class="fas fa-wind"></i>
+                        ${pokemon.stats[3].base_stat}
+                    </div>
+                </div>
+
             </div>
-            
-            <div class="card__body">
-                <h4>Stats</h4>
-                <div class="card__body__stat stat--hp" style="width:${pokemon.stats[0].base_stat >= 100 ?  100 : pokemon.stats[0].base_stat}%;">
-                    <i class="fas fa-heart"></i>
-                    ${pokemon.stats[0].base_stat}
-                </div>
-                <div class="card__body__stat stat--attack" style="width:${pokemon.stats[1].base_stat >= 100 ?  100 : pokemon.stats[1].base_stat}%;">
-                    <i class="fas fa-crosshairs"></i>
-                    ${pokemon.stats[1].base_stat}
-                </div>
-                <div class="card__body__stat stat--defense" style="width:${pokemon.stats[2].base_stat >= 100 ?  100 : pokemon.stats[2].base_stat}%;">
-                    <i class="fas fa-shield-alt"></i>
-                    ${pokemon.stats[2].base_stat}
-                </div>
-                <div class="card__body__stat stat--speed" style="width:${pokemon.stats[3].base_stat >= 100 ?  100 : pokemon.stats[3].base_stat}%;">
-                    <i class="fas fa-wind"></i>
-                    ${pokemon.stats[3].base_stat}
-                </div>
-            </div>
-        </div>
         `;
         
     const tops = document.querySelectorAll(".card__header--top");
@@ -101,13 +100,15 @@ document.getElementById("next").addEventListener("click", (evt) =>{
     evt.preventDefault();
     container.innerHTML = "";
     
-    showSpinner();
-    loader(pokemonAPI.next);
+    if(pokemonAPI && pokemonAPI.next != null){
+        container.innerHTML = "";
+        showSpinner();
+        loader(pokemonAPI.next);
+    }
 });
 
 document.getElementById("prev").addEventListener("click", (evt) =>{
     evt.preventDefault();
-    
     
     if(pokemonAPI && pokemonAPI.previous != null){
         container.innerHTML = "";
