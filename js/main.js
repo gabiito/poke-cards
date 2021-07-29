@@ -3,6 +3,8 @@ const colors = ["#B97A95", "#F6AE99", "#B5CDA3", "#F38BA0", "#C1AC95", "#5F939A"
 let pokemonAPI = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=10";
 
 const container = document.getElementById("app");
+const CARD_CLASS = ".card";
+
 
 async function getPokemonList(url){
     try{
@@ -14,8 +16,8 @@ async function getPokemonList(url){
                 for (let pokemon of list.results){
                     await getPokemonData(pokemon.url);
                 }
-                colorShifter(".card__header--top");
-                hideSpinner();
+                hideSpinner()
+                showCards(CARD_CLASS);
             }
             catch(e){
                 console.log(e);
@@ -82,16 +84,19 @@ function fillContent(pokemon){
                         ${pokemon.stats[5].base_stat}
                     </div>
                 </div>
-
             </div>
         `;
 }
 
-function colorShifter(topClass){
-    const tops = document.querySelectorAll(topClass);
-    for (let top of tops){
+function showCards(cardClass){
+    const cards = document.querySelectorAll(cardClass);
+    for (let card of cards){
+        let top = card.children[0].children[0];
         let rand = Math.floor(Math.random() * colors.length);
         top.style.background = colors[rand];
+        setTimeout(() => {
+            card.classList.toggle('card--show')
+        }, 300);
     }
 }
 
@@ -104,6 +109,8 @@ var showSpinner = function(){
   }
 
 let loader = function (url){
+    showCards(CARD_CLASS);
+    container.innerHTML = '';
     showSpinner();
     getPokemonList(url);
 }
@@ -112,12 +119,10 @@ function movePage(pokeList, direction){
     if(pokeList){
         switch(direction){
             case 'next':    if(pokeList.next != null){
-                                container.innerHTML = "";
                                 loader(pokemonAPI.next);
                             }
                 break;
             case 'prev':    if(pokeList.previous != null){
-                                container.innerHTML = "";
                                 loader(pokemonAPI.previous);
                             } 
             break;
@@ -126,15 +131,11 @@ function movePage(pokeList, direction){
     }
 }
 
-document.addEventListener("DOMContentLoaded", (evt) =>{
-    
-    loader(pokemonAPI);
-});
+document.addEventListener("DOMContentLoaded", () => loader(pokemonAPI));
 
 
 document.getElementById("next").addEventListener("click", (evt) =>{
     evt.preventDefault();
-    container.innerHTML = "";
     
     movePage(pokemonAPI,'next');
 });

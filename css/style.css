@@ -49,6 +49,7 @@ body {
 
 .card {
     width: 200px;
+    height: 0;
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
@@ -58,12 +59,11 @@ body {
     align-items: center;
     justify-content: space-evenly;
     cursor: pointer;
-    transition: all ease-in-out 300ms;
+    transition: height 350ms;
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.9);
+.card--show{
+    height: 300px;
 }
 
 .card__header {
