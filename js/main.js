@@ -4,13 +4,39 @@ let pokemonAPI = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=10";
 
 const container = document.getElementById("app");
 
+async function getPokemonList(url){
+    try{
+        let resp = await fetch(url);
+        if (resp.ok){
+            try{
+                let list = await resp.json();
+                pokemonAPI = list;
+                for (let pokemon of list.results){
+                    await getPokemonData(pokemon.url);
+                }
+                colorShifter(".card__header--top");
+                hideSpinner();
+            }
+            catch(e){
+                console.log(e);
+            }
+        }
+        else{
+            throw new Error(`HTTP error!, fetching pokemon list. Status: ${resp.status}`);
+        }
+    }
+    catch (e){
+        console.log(e);
+    }
+}
+
 async function getPokemonData (url){
     let resp = await fetch(url);
     if (!resp.ok){
-        throw new Error(`HTTP error!, status: ${resp.status}`);
+        throw new Error(`HTTP error!, fetching pokemon data. Status: ${resp.status}`);
     }
     let data = await resp.json();
-    return data;
+    fillContent(data);
 }
 
 function getStats(pokemon){
@@ -27,7 +53,6 @@ function getStats(pokemon){
 
 function fillContent(pokemon){
         let statWidths = getStats(pokemon);
-        console.log(statWidths)
         container.innerHTML += `
             <div class="card">
                 <div class="card__header">
@@ -60,7 +85,6 @@ function fillContent(pokemon){
 
             </div>
         `;
-        colorShifter(".card__header--top");
 }
 
 function colorShifter(topClass){
@@ -80,32 +104,20 @@ var showSpinner = function(){
   }
 
 let loader = function (url){
-    try {
-        getPokemonData(url).then(res =>{
-            pokemonAPI = res;
-
-            res.results.forEach(pokemon =>{
-                getPokemonData(pokemon.url).then(data => fillContent(data));
-            });
-            hideSpinner();
-        });
-    } catch (e) {
-        console.log(e);
-    }
+    showSpinner();
+    getPokemonList(url);
 }
 
-function movePage(object, direction){
-    if(object){
+function movePage(pokeList, direction){
+    if(pokeList){
         switch(direction){
-            case 'next':    if(object.next != null){
+            case 'next':    if(pokeList.next != null){
                                 container.innerHTML = "";
-                                showSpinner();
                                 loader(pokemonAPI.next);
                             }
                 break;
-            case 'prev':    if(object.previous != null){
+            case 'prev':    if(pokeList.previous != null){
                                 container.innerHTML = "";
-                                showSpinner();
                                 loader(pokemonAPI.previous);
                             } 
             break;
@@ -116,7 +128,6 @@ function movePage(object, direction){
 
 document.addEventListener("DOMContentLoaded", (evt) =>{
     
-    showSpinner();
     loader(pokemonAPI);
 });
 
